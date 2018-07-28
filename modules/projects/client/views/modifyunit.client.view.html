@@ -1,0 +1,25 @@
+<section data-ng-controller="UnitUpdateClientController as vm" data-ng-init="vm.initUnit()">
+	<div class="row">
+		<h3>{{'UPDATE_UNIT' | translate}}</h3>
+	</div>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<div class="row">
+		<form name="modifyUnitForm" role="form" class="form-horizontal col-xs-10" data-ng-submit="vm.storeUnit(modifyUnitForm.$valid)">
+			<fieldset>
+				<span data-ng-include="'/modules/templates/client/views/show/templateform.client.view.html'"></span>
+			</fieldset>
+			<div class="row">
+				<div class="col-xs-6">
+					<button type="submit" class="btn btn-primary">
+						<i class="glyphicon glyphicon-ok"></i>{{'SAVE' | translate}}
+					</button>
+					<button type="button" class="btn btn-default" data-ng-click="vm.cancelUpdate()">
+						<i class="glyphicon glyphicon-remove"></i>{{'CANCEL' | translate}}
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

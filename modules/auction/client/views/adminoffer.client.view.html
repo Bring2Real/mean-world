@@ -1,0 +1,36 @@
+<section data-ng-controller="OffersAdminClientController as vm" data-ng-init="vm.initOffers()">
+	<div class="row">
+		<h3>{{vm.title}}</h3>
+	</div>
+	<div class="row">
+		<span>{{'START' | translate}}:&nbsp;{{vm.auction.round.date_start | date : 'yyyy-MM-dd HH:mm'}}&nbsp;{{'FINISH_UNTIL' | translate}}:&nbsp;{{vm.auction.round.date_end | date : 'yyyy-MM-dd HH:mm'}}</span>
+	</div>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<div class="row top10" data-ng-repeat="offer in vm.offers">
+		<div class="col-xs-6" data-ng-repeat="off in offer">
+			<div class="row">
+				<label>{{off.title}}</label>
+			</div>
+			<div class="row" data-ng-repeat="field in off.form_data">
+				<div class="col-xs-6">
+					<span class="form-control">{{field.value}}</span>
+				</div>
+				<div class="col-xs-6">
+					<button type="button" class="btn btn-primary btn-xs" data-ng-if="field.field_note == null" data-ng-click="field.field_note=''">{{'ADD_NOTE' | translate}}</button>
+					<div class="form-group" data-ng-if="field.field_note != null">
+						<div class="col-xs-7 nopadding">
+							<input type="text" name="field_note" class="form-control" data-ng-model="field.field_note" />
+						</div>
+						<div class="col-xs-5 nopadding">
+							<button type="button" class="btn btn-primary btn-xs" data-ng-click="vm.storeFieldNote(off, field.field_name)">{{'SAVE' | translate}}</button>
+							<button type="button" class="btn btn-default btn-xs" data-ng-click="
+							vm.removeFieldNote(off, field.field_name)">{{'REMOVE' | translate}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

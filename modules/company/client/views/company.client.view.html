@@ -1,0 +1,75 @@
+<section data-ng-controller="CompanyClientController">
+	<h3 class="col-xs-12 text-center">{{'COMPANY' | translate}}</h3>
+	<div class="row">
+		<div class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
+			<form name="companyUpdateForm" class="form-horizontal" data-ng-submit="saveCompany(companyUpdateForm.$valid)">
+				<div class="form-group" show-errors>
+					<input type="text" name="name" class="form-control" data-ng-model="company.name" placeholder="{{'COMPANY_NAME' | translate}}" required autofocus/>
+					<div ng-messages="companyUpdateForm.name.$error" role="alert">
+						<p class="help-block error-text" ng-message="required">{{'COMPANY_NAME_REQUIRED' | translate}}</p>
+					</div>
+				</div>
+				<div class="form-group" show-errors>
+					<input type="text" name="address" class="form-control" data-ng-model="company.address" placeholder="{{'COMPANY_STREET_ADDRESS' | translate}}" required/>
+					<div ng-messages="companyUpdateForm.address.$error" role="alert">
+						<p class="help-block error-text" ng-message="required">{{'FIELD_REQUIRED' | translate}}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" name="address2" class="form-control" data-ng-model="company.address2" placeholder="{{'COMPANY_STREET_ADDRESS' | translate}} 2"/>
+				</div>
+				<div class="form-group" show-errors>
+					<input type="text" name="post_code" class="form-control" data-ng-model="company.post_code" placeholder="{{'COMPANY_POST_CODE' | translate}}" required/>
+					<div ng-messages="companyUpdateForm.post_code.$error" role="alert">
+						<p class="help-block error-text" ng-message="required">{{'FIELD_REQUIRED' | translate}}</p>
+					</div>
+				</div>
+				<div class="form-group" show-errors>
+					<input type="text" name="city" class="form-control" data-ng-model="company.city" placeholder="{{'COMPANY_CITY' | translate}}" required/>
+					<div ng-messages="companyUpdateForm.city.$error" role="alert">
+						<p class="help-block error-text" ng-message="required">{{'FIELD_REQUIRED' | translate}}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<select class="form-control" placeholder="{{'DEFAULT_LANGUAGE' | translate}}" title="{{'DEFAULT_LANGUAGE' | translate}}" data-ng-model="company.language">
+						<option data-ng-repeat="language in languages" value="{{language.code}}">{{language.name}}</option>
+					</select>
+				</div>
+				<div class="form-group" show-errors>
+					<input type="text" name="phone" class="form-control" data-ng-model="company.phone" placeholder="{{'COMPANY_PHONE' | translate}}" required/>
+					<div ng-messages="companyUpdateForm.phone.$error" role="alert">
+						<p class="help-block error-text" ng-message="required">{{'FIELD_REQUIRED' | translate}}</p>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-xs-1">
+						<input type="checkbox" name="is_marketing" data-ng-model="company.is_marketing" id="is_marketing" />
+					</div>
+					<label class="col-xs-3">{{'MARKETING' | translate}}</label>
+				</div>
+				<div class="row form-group">
+					<div class="col-xs-1">
+						<input type="checkbox" name="is_finance" data-ng-model="company.is_finance" id="is_finance" />
+					</div>
+					<label class="col-xs-3">{{'FINANCE' | translate}}</label>
+				</div>
+				<div class="form-group text-right">
+					<button type="submit" class="btn btn-primary">{{'SAVE' | translate}}</button>
+				</div>
+			</form>
+			<div class="row text-center">
+				<label>{{'CREATED' | translate}}: </label>&nbsp;{{company.createdAt | date:'dd/MM/yyyy HH:mm'}}
+			</div>
+			<div class="row text-center">
+				<label>{{'BY' | translate}}: </label>&nbsp;{{company.user.displayName}}
+			</div>
+			<br/>
+			<div class="row text-center">
+				<label>{{'UPDATED' | translate}}: </label>&nbsp;{{company.updatedAt | date:'dd/MM/yyyy HH:mm'}}
+			</div>
+			<div class="row text-center">
+				<label>{{'BY' | translate}}: </label>&nbsp;{{company.user_update.displayName}}
+			</div>
+		</div>
+	</div>
+</section>

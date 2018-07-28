@@ -1,0 +1,70 @@
+<section class="container" data-ng-controller="ProjectExposeClientController as vm" data-ng-init="vm.initProject()">
+	<div class="row">
+		<div class="col-xs-5"><h2>{{vm.project.project_name}}</h2></div>
+		<div class="col-xs-7 text-right">
+			<a ui-sref="update-teaser({projId: vm.project._id})" data-ng-show="vm.canEdit">{{'EDIT_PROJECT_PAGE' | translate}}</a>
+			<button type="button" class="btn btn-primary segment" data-ng-click="vm.createPDF(vm.pdf_file_download)" data-ng-disabled="vm.pdf_file_download.length==0">{{'DOWNLOAD_PROJECT' | translate}}&nbsp;V 1</button>
+			<button type="button" class="btn btn-primary segment" data-ng-show="!vm.canAddOffer" data-ng-click="vm.showOffers()">{{'OFFERS' | translate}}</button>
+			<button type="button" class="btn btn-primary segment" data-ng-if="vm.canAddOffer && vm.project.status==1" data-ng-click="vm.addOffer()">{{'ADD_OFFER' | translate}}</button>
+			<button type="button" class="btn btn-default segment" data-ng-show="vm.canInvite" data-ng-click="vm.showInvite()">{{'INVITE' | translate}}</button>
+		</div>
+	</div>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<!-- for PDF -->
+	<div id="project-to-download">
+		<div class="row top30">
+			<div class="col-xs-4">
+				<img class="img-thumbnail thumb-expose" src="{{vm.be}}{{vm.project.project_logo.field_url_prev}}" title="{{vm.project.project_logo.field_default}}" data-ng-click="vm.openImage(0)" />
+			</div>
+			<div class="col-xs-4" data-ng-repeat="img in vm.fields | filter: {field_type: 4} | limitTo: 2">
+				<img class="img-thumbnail thumb-expose" src="{{vm.be}}{{img.field_url_prev}}" title="{{img.field_default}}" data-ng-click="vm.openImage($index + 1)"/>
+			</div>
+		</div>
+		<div class="row top30">
+			<div data-ng-repeat="field in vm.fields">
+				<div class="row top15" data-ng-if="field.field_type != 4 && field.field_type != 5 && field.field_type != 6">
+					<label class="col-xs-12">{{field.field_caption}}</label>
+					<div class="col-xs-12">{{field.value}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="row top30" data-ng-show="vm.unitList && vm.units.length > 0">
+			<h4 class="col-xs-2">{{'UNITS' | translate}}</h4>
+			<table class="table table-hovered">
+				<thead>
+					<tr>
+						<th class="cil-xs-1" data-ng-repeat="uh in vm.unit_headers" data-ng-show="!uh.hidden">{{uh.field_caption}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="unit in vm.units | limitTo: vm.unitsToShow" emit-last-repeater-element>
+						<td class="col-xs-1" data-ng-repeat="dat in unit.unit_data" data-ng-show="!dat.hidden">{{dat.value}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="segment show-more" data-ng-show="vm.showMoreButton" data-ng-click="vm.showAllUnits()">
+				{{'SHOW_ALL' | translate}}
+			</div>
+		</div>
+	</div>
+	<!-- Attachtments -->
+	<div class="row top30" data-ng-show="vm.attachtments">
+		<h4 class="col-xs-12">{{'ATTACHMENTS' | translate}}</h4>
+		<div class="row">
+			<div class="col-xs-3">
+				<p data-ng-repeat="att in vm.fields | filter: {field_type: 5}">
+					<a href="{{vm.be+att.field_url}}" target="_blank" title="Download document"><span class="far fa-file-pdf"></span></a>
+					<a href="" data-ng-click="vm.pdf_url=vm.be+att.field_url">
+						{{att.field_caption}}
+					</a>
+				</p>
+			</div>
+			<object class="col-xs-9 row-document" data="{{vm.pdf_url}}" type="application/pdf">
+				<embed src="{{vm.pdf_url}}" type="application/pdf"/>
+			</object>
+		</div>
+	</div>
+	<br />
+</section>

@@ -1,0 +1,46 @@
+<section data-ng-controller="KeysAdminController" data-ng-init="initList()">
+	<h3 class="text-center">{{'API_KEYS' | translate}}</h3>
+	<div class="row">
+		<button class="btn btn-primary" data-ng-click="showAddKeyModal()">
+			<i class="glyphicon glyphicon-plus"></i>{{'ADD' | translate}}
+		</button>
+	</div>
+	<div class="row">
+		<table class="table table-stripped">
+			<thead>
+				<tr>
+					<th class="col-xs-2">{{'BACK_END' | translate}}</th>
+					<th class="col-xs-1">{{'KEY_DATE' | translate}}</th>
+					<th class="col-xs-4">{{'API_KEY' | translate}}</th>
+					<th class="col-xs-1">{{'DISABLED' | translate}}</th>
+					<th class="col-xs-1">{{'USED' | translate}}</th>
+					<th class="col-xs-3">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat = "key in keys track by $index">
+					<td class="col-xs-2">{{key.backend}}</td>
+					<td class="col-xs-1">{{key.key_date | date : 'yyyy-MM-dd'}}</td>
+					<td class="col-xs-4">{{key.api_key}}</td>
+					<td class="col-xs-1">
+						<span data-ng-if="key.disabled">{{'YES' | translate}}</span>
+						<span data-ng-if="!key.disabled">{{'NO' | translate}}</span>
+					</td>
+					<td class="col-xs-1">
+						<span data-ng-if="key.used">
+							<i class="glyphicon glyphicon-flag"></i>
+						</span>
+					</td>
+					<td class="col-xs-3">
+						<button class="btn btn-default" data-ng-click="setToUse(key.api_key)">
+							<i class="glyphicon glyphicon-ok"></i>
+						</button>
+						<button class="btn btn-danger" data-ng-click="removeKey(key, $index)">
+							<i class="glyphicon glyphicon-trash"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</section>

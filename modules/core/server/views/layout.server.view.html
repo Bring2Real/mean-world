@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-strict-di>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!-- Disable mobile view -->
+  <!-- <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"> -->
+  <meta name="viewport" content="width=1024,initial-scale=1,maximum-scale=1">
+  <title page-title>Willbruck Company</title>
+  <meta name="description" content="{{description}}">
+  <meta name="fragment" content="!">
+
+  <!-- Apple META -->
+  <!-- <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+
+  <!-- Application CSS Files -->
+  {{#each cssFiles}}
+  <link rel="stylesheet" href="/{{this}}">{{/each}}
+</head>
+
+<body class="ng-cloak">
+  <noscript>
+    <style>
+      [ng\:cloak],
+      [ng-cloak],
+      [x-ng-cloak],
+      .ng-cloak,
+      .x-ng-cloak {
+        display: block !important;
+      }
+    </style>
+    <div class="alert alert-warning">
+      <strong>This page requires JavaScript.</strong> Please enable it in your browser.
+    </div>
+  </noscript>
+
+  <!--Embedding The User Object-->
+  <script type="text/javascript">
+    var user = {{{ user }}};
+    var company = {{{ company }}};
+    var anotherSess = {{{ anotherSess }}};
+    var server = {{{ server }}};
+    var env = "{{ env }}";
+  </script>
+
+  <div ng-include="'/modules/core/client/views/header.client.view.html'"></div>
+  <div id="view" data-ng-class="{pusher: menuActive==true}" >
+    {{{block "content"}}}
+  </div>
+
+  <!--Application JavaScript Files-->
+  {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
+</body>
+
+</html>

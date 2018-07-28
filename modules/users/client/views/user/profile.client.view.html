@@ -1,0 +1,49 @@
+<section class="container" data-ng-controller="UserProfileClientController">
+	<div class="row">
+		<h3 class="text-center">{{user_profile.displayName}}</h3>
+	</div>
+	<div class="row">
+		<form name="userProfileForm" class="signin" data-ng-submit="updateProfile(userProfileForm.$valid)" novalidate>
+			<div class="form-group">
+				<label for="email">{{'EMAIL' | translate}}</label>
+				<input type="text" id="email" name="email" class="form-control" ng-model="user_profile.email" placeholder="{{'EMAIL' | translate}}" required autofocus>
+				<div ng-messages="userProfileForm.email.$error" role="alert">
+					<p class="help-block error-text" ng-message="required">{{'EMAIL_REQUIRED' | translate}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="firstName">{{'FIRST_NAME' | translate}}</label>
+				<input type="text" id="firstName" name="firstName" class="form-control" ng-model="user_profile.firstName" placeholder="{{'FIRST_NAME' | translate}}" required autofocus>
+				<div ng-messages="userProfileForm.firstName.$error" role="alert">
+					<p class="help-block error-text" ng-message="required">{{'FIRST_NAME_REQUIRED' | translate}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="lastName">{{'LAST_NAME' | translate}}</label>
+				<input type="text" id="lastName" name="lastName" class="form-control" ng-model="user_profile.lastName" placeholder="{{'LAST_NAME' | translate}}" required autofocus>
+				<div ng-messages="userProfileForm.lastName.$error" role="alert">
+					<p class="help-block error-text" ng-message="required">{{'LAST_NAME_REQUIRED' | translate}}</p>
+				</div>
+			</div>
+	        <div class="form-group" show-errors>
+	          <label for="phone">{{'PHONE' | translate}}</label>
+	          <input type="text" id="phone" name="phone" class="form-control segment" ng-model="user_profile.phone" placeholder="Phone" />
+	        </div>
+			<div class="form-group">
+				<label for="org">{{'ORGANISATION' | translate}}</label>
+				<input type="text" id="org" name="org" class="form-control" ng-model="user_profile.org" placeholder="{{'ORGANISATION' | translate}}">
+			</div>
+			<div class="form-group">
+				<label>{{'LANGUAGE' | translate}}</label>
+				<div class="button-bar">
+					<a class="btn" ng-class="{'btn m-link segment': isActiveLang('de'), 'btn m-link ': !isActiveLang('de')}" data-ng-click="setActiveLang('de')">de</a>
+					<a class="btn" ng-class="{'btn m-link segment': isActiveLang('en'), 'btn m-link ': !isActiveLang('en')}" data-ng-click="setActiveLang('en')">en</a>
+					<a class="btn" ng-class="{'btn m-link segment': isActiveLang('ru'), 'btn m-link ': !isActiveLang('ru')}" data-ng-click="setActiveLang('ru')">ru</a>
+				</div>
+			</div>
+			<div class="text-center form-group">
+				<button type="submit" class="btn btn-primary segment">{{'SAVE_PROFILE' | translate}}</button>
+			</div>
+		</form>
+	</div>
+</section>

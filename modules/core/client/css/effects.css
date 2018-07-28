@@ -1,0 +1,237 @@
+/*effects*/
+
+.slideup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+}
+
+.slideup.ng-enter,
+.slideup.ng-leave {
+    -webkit-transition: all 0.8s ease ;
+    transition: all 0.8s ease ;
+
+}
+.slideup.ng-enter {
+    top: -100%;
+}
+.slideup.ng-enter-active {
+    top: 0 ;
+}
+.slideup.ng-leave {
+    top: 0 ;
+}
+.slideup.ng-leave-active {
+    top: -100% ;
+}
+
+.slideup2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+}
+
+.slideup2.ng-enter,
+.slideup2.ng-leave {
+    -webkit-transition: all 0.8s ease ;
+    transition: all 0.8s ease ;
+
+
+}
+.slideup2.ng-enter {
+    top: 100% ;
+}
+.slideup2.ng-enter-active {
+    top: 0 ;
+}
+.slideup2.ng-leave {
+    top: 0 ;
+}
+.slideup2.ng-leave-active {
+    top: 100%;
+}
+
+
+.slidedown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.slidedown.ng-enter,
+.slidedown.ng-leave {
+    -webkit-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+.slidedown.ng-enter {
+    top: -100%;
+}
+.slidedown.ng-enter-active {
+    top: 0;
+}
+.slidedown.ng-leave {
+    top: 0;
+}
+.slidedown.ng-leave-active {
+    top: 100%;
+}
+
+/*effects*/
+
+.slide1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.slide1.ng-enter,
+.slide1.ng-leave {
+    -webkit-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+.slide1.ng-enter {
+    left: -100%;
+}
+.slide1.ng-enter-active {
+    left: 0;
+}
+.slide1.ng-leave {
+    left: 0;
+}
+.slide1.ng-leave-active {
+    left: -100%;
+}
+
+.slide2 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.slide2.ng-enter,
+.slide2.ng-leave {
+    -webkit-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+.slide2.ng-enter {
+    left: 100%;
+}
+.slide2.ng-enter-active {
+    left: 0;
+}
+.slide2.ng-leave {
+    left: 0;
+}
+.slide2.ng-leave-active {
+    left: 100%;
+}
+
+
+/*contacts animate*/
+@media screen and (max-width: 500px){
+.slideup-contact {
+    /*position: absolute;*/
+    top: 0;
+    left: 0;
+    right: 0;
+    /*height: 100%;*/
+}
+.slideup-contact.ng-enter,
+.slideup-contact.ng-leave {
+    -webkit-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+.slideup-contact.ng-enter {
+    top: 100%;
+}
+.slideup-contact.ng-enter-active {
+    top: 0;
+}
+.slideup-contact.ng-leave {
+    top: 0;
+    opacity: 0;
+}
+.slideup-contact.ng-leave-active {
+    top: 100%;
+    opacity: 0;
+}
+
+}
+
+
+.animate-switch.ng-animate {
+  -webkit-transition:all linear 0.8s;
+  transition:all linear 0.8s;
+}
+.animate-switch.ng-leave,
+.animate-switch.ng-leave.ng-leave-active{
+  display:none;
+}
+.animate-switch.ng-enter {
+  opacity: 0;
+}
+.animate-switch.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+
+
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fadein-menu {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in-out 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in-out 1;
+  animation:fadeIn ease-in-out 1;
+
+
+
+  -webkit-animation-fill-mode:forwards;  
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:0.5s;
+  -moz-animation-duration:0.5s;
+  animation-duration:0.5s;
+
+    /*-webkit-animation-delay: 0.7s;
+  -moz-animation-delay: 0.7s;
+  animation-delay: 0.7s;*/
+}
+.fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 1;
+}
+.fade.ng-enter,
+.fade.ng-leave {
+    -webkit-transition: all 0.01s ease;
+    transition: all 0.01s ease;
+}
+.fade.ng-enter {
+    opacity: 0;
+}
+.fade.ng-enter-active {
+    opacity: 1;
+}
+.fade.ng-leave {
+    opacity: 1;
+}
+.fade.ng-leave-active {
+    opacity: 0;
+}
+section.ng-scope{
+    height: 100%;
+}

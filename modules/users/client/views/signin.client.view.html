@@ -1,0 +1,30 @@
+<div class="row line3" data-ng-class="screenMod && mobile ? 'screen-mod-menu' : ''">
+<div data-ng-controller="SigninClientController">
+	<h3 class="col-xs-12 text-center">{{'LOGIN_ACCOUNT' | translate}}</h3>
+	<div class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
+		<form name="userSigninForm" data-ng-submit="signin(userSigninForm.$valid)" class="signin" novalidate autocomplete="off">
+			<fieldset>
+				<div class="form-group" show-errors>
+					<uib-alert type="danger" ng-show="err_message" class="text-center text-danger">
+						<span data-ng-bind="err_message"></span>
+					</uib-alert>
+					<label for="usernameOrEmail">{{'EMAIL' | translate}}</label>
+					<input type="text" name="usernameOrEmail" id="usernameOrEmail" class="form-control segment" data-ng-model="sgin.usernameOrEmail" placeholder="{{'EMAIL' | translate}}" required autofocus />
+					<div ng-messages="userSigninForm.usernameOrEmail.$error" role="alert">
+						<p class="help-block error-text" ng-message="required">{{'USERNAME_OR_EMAIL_REQUIRED' | translate}}</p>
+					</div>
+				</div>
+				<div class="form-group" show-errors>
+					<label for="password">{{'PASSWORD' | translate}}</label>
+					<input type="password" name="password" id="password" class="form-control segment" data-ng-model="sgin.password" placeholder="{{'PASSWORD' | translate}}" required>
+					<div ng-messages="userSigninForm.password.$error" role="alert">
+						<p class="help-block error-text" ng-message="required">{{'PASSWORD_REQUIRED' | translate}}</p>
+					</div>
+				</div>
+		        <div class="text-center form-group">
+		          <button type="submit" class="btn segment">{{'SIGN_IN' | translate}}</button></a>
+		        </div>
+			</fieldset>
+		</form>
+	</div>
+</div>

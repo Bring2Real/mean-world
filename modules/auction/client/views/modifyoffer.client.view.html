@@ -1,0 +1,35 @@
+<section data-ng-controller="OffersBankClientController as vm" data-ng-init="vm.initOffers()">
+	<div class="row">
+		<h3>{{vm.title}}</h3>
+	</div>
+	<div class="row">
+		<span>{{'START' | translate}}:&nbsp;{{vm.auction.rounds[vm.level-1].date_start | date : 'yyyy-MM-dd HH:mm'}}&nbsp;{{'FINISH_UNTIL' | translate}}:&nbsp;{{vm.auction.rounds[vm.level-1].date_end | date : 'yyyy-MM-dd HH:mm'}}</span>
+	</div>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<div class="row">
+		<button type="button" class="btn btn-primary segment" data-ng-click="vm.addOffer()">
+			{{'ADD' | translate}}
+		</button>
+	</div>
+	<div class="row top10" data-ng-repeat="offer in vm.offers">
+		<div class="col-xs-4" data-ng-repeat="off in offer">
+			<a href="" data-ng-click="vm.modifyOffer(off)" data-ng-if="!off.accepted && !off.rejected"><label>{{off.title}}</label></a><label data-ng-if="off.accepted || off.rejected">{{off.title}}</label>&nbsp;<a href="" class="danger" data-ng-click="vm.removeOffer(off)" data-ng-if="!off.accepted && !off.rejected">({{'REMOVE' | translate}})</a>
+			<div class="row top5" data-ng-repeat="field in off.form_data">
+				<span class="form-control" data-ng-show="!off.modify">{{field.value}}</span>
+				<input type="text" class="form-control" data-ng-model="field.value" title="{{field.field_caption}}" ng-required="field.field_required" placeholder="{{field.field_caption}}" data-ng-if="off.modify && field.field_type==1" />
+				<select class="form-control" data-ng-model="field.value" data-ng-if="off.modify && field.field_type==2">
+					<option data-ng-repeat="opt in field.field_opts" value="{{opt}}">{{opt}}</option>
+				</select>
+				<span class="form-control" data-ng-show="off.modify && field.field_type == 7">{{field.value}}</span>
+			</div>
+			<button type="button" class="btn btn-primary segment top5" data-ng-if="off.modify" data-ng-click="vm.storeOffer(off)">
+				<i class="glyphicon glyphicon-ok"></i>{{'SAVE' | translate}}
+			</button>
+			<button type="button" class="btn btn-default segment top5" data-ng-click="vm.cancelModify(off)" data-ng-if="off.modify">
+				<i class="glyphicon glyphicon-remove"></i>{{'CANCEL' | translate}}
+			</button>
+		</div>
+	</div>
+</section>

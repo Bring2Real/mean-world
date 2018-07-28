@@ -1,0 +1,48 @@
+<section data-ng-controller="ListProjectsClientController as vm">
+	<h3>{{'ALL_PROJECTS' | translate}}</h3>
+	<div class="row">
+		<div class="col-xs-2">
+			<button class="btn btn-primary segment" data-ng-click="vm.goAddProject()">{{'ADD_PROJECT' | translate}}</button>
+		</div>
+		<div class="col-xs-2" data-ng-show="vm.editTemplate">
+			<button class="btn btn-default segment" data-ng-click="vm.goTemplate()">{{'TEMPLATE' | translate}}</button>
+		</div>
+	</div>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<div class="row">
+		<table class="table table-striped" st-table="vm.projects" st-safe-src="vm.projectsSafe">
+			<thead>
+				<tr>
+					<th class="col-xs-1">{{'PHOTO' | translate}}</th>
+					<th class="col-xs-2">{{'TITLE' | translate}}</th>
+					<th class="col-xs-2">{{'OWNER' | translate}}</th>
+					<th class="col-xs-2">{{'START' | translate}}</th>
+					<th class="col-xs-2">{{'STATUS' | translate}}</th>
+					<th class="col-xs-3">&nbsp;</th>
+				</tr>
+				<tr>
+                    <th colspan="6">
+                        <input st-search="" class="form-control" placeholder="global search..." type="text" />
+                    </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="proj in vm.projects">
+					<td class="col-xs-2">
+						<img class="img-thumbnail thumb-table" src="{{vm.be}}{{proj.project_logo.field_url_prev}}" />
+					</td>
+					<td class="col-xs-1">{{proj.project_name}}</td>
+					<td class="col-xs-2">{{proj.user.displayName}}</td>
+					<td class="col-xs-2">{{proj.createdAt | date:'dd.MM.yyyy HH:mm'}}</td>
+					<td class="col-xs-2">{{proj.str_status}}</td>
+					<td class="col-xs-3">
+						<a class="btn btn-default segment" href="/update-teaser/{{proj._id}}">{{'UPDATE' | translate}}</a>
+						<button class="btn btn-default segment" data-ng-click="vm.archiveProj(proj)">{{'ARCHIVE' | translate}}</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</section>

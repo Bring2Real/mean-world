@@ -1,0 +1,214 @@
+<section data-ng-controller="AuctionClientController as vm" data-ng-init="vm.initAuction()" class="col-xs-12">
+	<h3>{{vm.pageTitle}}</h3>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<div data-ng-show="!vm.showOffers">
+		<div class="row text-center">
+			{{'START_COLLECTING_OFFERS' | translate}}
+		</div>
+		<div class="row text-center">
+			<button type="button" class="btn btn-primary segment" data-ng-click="vm.createAuction()">{{'START_COLLECTING_OFFERS' | translate}}</button>
+		</div>
+	</div>
+	<div data-ng-show="vm.showOffers">
+		<div class="row top7" data-ng-if="vm.auction.rounds.length > 0">
+			<div class="col-xs-2">&nbsp;</div>
+			<div class="col-xs-10">
+				<button type="button" class="btn btn-primary segment" data-ng-if="(vm.auction.status == 0 || vm.auction.status == 4) && vm.auction.banks.length != 0" data-ng-click="vm.setStart()">{{'START' | translate}}</button>
+				<button type="button" class="btn btn-primary segment" data-ng-if="vm.auction.status == 1" data-ng-click="vm.setPause()">{{'PAUSE' | translate}}</button>
+				<button type="button" class="btn btn-primary segment" data-ng-if="vm.auction.status == 2" data-ng-click="vm.setResume()">{{'RESUME' | translate}}</button>
+				<button type="button" class="btn btn-primary segment" data-ng-if="vm.auction.status == 1 || vm.auction.status == 2" data-ng-click="vm.setStop()">{{'STOP' | translate}}</button>
+				<button type="button" class="btn btn-warning segment" data-ng-if="vm.auction.status == 1 || vm.auction.status == 2" data-ng-click="vm.setCancel()">{{'CANCEL' | translate}}</button>
+			</div>
+		</div>
+		<div class="row top7">
+			<!-- Info about auction -->
+			<div class="col-xs-2" data-ng-show="!vm.editAuction">
+				<div class="row">
+					<span>{{'PROJECT_MANAGER' | translate}}:</span>&nbsp;{{vm.auction.manager.displayName}}
+				</div>
+				<div class="row">
+					<span>{{'EMAIL' | translate}}:</span>&nbsp;{{vm.auction.manager.email}}
+				</div>
+				<br />
+				<div class="row">
+					<span>{{'INVITE_REMINDER' | translate}}:</span>&nbsp;<span data-ng-show="vm.auction.invite_reminder">{{'ACTIVE' | translate}}</span><span data-ng-show="!vm.auction.invite_reminder">{{'INACTIVE' | translate}}</span>
+				</div>
+				<div class="row">
+					<span>{{'FINISH_REMINDER' | translate}}:</span>&nbsp;<span data-ng-show="vm.auction.finish_reminder">{{'ACTIVE' | translate}}</span><span data-ng-show="!vm.auction.finish_reminder">{{'INACTIVE' | translate}}</span>
+				</div>
+				<br />
+				<div class="row">
+					<span>{{'CREATED' | translate}}:</span>&nbsp;{{vm.auction.createdAt | date:'yyyy-MM-dd HH:mm'}}
+				</div>
+				<div class="row">
+					<span>{{'BY' | translate}}:</span>&nbsp;{{vm.auction.user.displayName}}
+				</div>
+				<br />
+				<div class="row">
+					<span>{{'UPDATED' | translate}}:</span>&nbsp;{{vm.auction.updatedAt | date:'yyyy-MM-dd HH:mm'}}
+				</div>
+				<div class="row">
+					<span>{{'BY' | translate}}:</span>&nbsp;{{vm.auction.user_update.displayName}}
+				</div>
+				<div class="row top7" data-ng-if="vm.auction.status != 3">
+					<button class="btn btn-primary segment" data-ng-click="vm.startEditAuction()">{{'EDIT' | translate}}</button>
+					<button class="btn btn-primary segment">{{'VIEW_TEASER' | translate}}</button>
+				</div>
+			</div>
+			<!-- Edit auction block -->
+			<div class="col-xs-3 panel panel-default" data-ng-show="vm.editAuction">
+				<div class="row top7">
+					<select class="form-control" data-ng-model="vm.auctionSafe.manager._id" data-ng-change="vm.changeManager()">
+						<option data-ng-repeat="user in vm.managers" value="{{user._id}}">{{user.displayName}}</option>
+					</select>
+				</div>
+				<div class="row top5">
+					<span class="form-control">{{vm.auctionSafe.manager.email}}
+				</div>
+				<div class="row top5">
+					<div class="col-xs-7">
+						<label>{{'INVITE_REMINDER' | translate}}</label>
+					</div>
+					<div class="col-xs-1">
+						<input type="checkbox" name="invite_reminder" data-ng-model="vm.auctionSafe.invite_reminder" />
+					</div>
+				</div>
+				<div class="row top5">
+					<div class="col-xs-7">
+						<label>{{'FINISH_REMINDER' | translate}}</label>
+					</div>
+					<div class="col-xs-1">
+						<input type="checkbox" name="finish_reminder" data-ng-model="vm.auctionSafe.finish_reminder" />
+					</div>
+				</div>
+				<div class="row">
+					<button class="btn btn-primary segment" data-ng-click="vm.updateAuction()">{{'SAVE' | translate}}</button>
+					<button class="btn btn-default segment" data-ng-click="vm.cancelEditAuction()">{{'CANCEL' | translate}}</button>
+				</div>
+				<br />
+			</div>
+			<!-- Rounds block -->
+			<div class="col-xs-2" data-ng-repeat="level in vm.auction.rounds">
+				<div class="row">
+					<label data-ng-if="level.start || level.end">{{'ROUND' | translate}}&nbsp;{{level.level}}</label>
+					<a href="" data-ng-click="vm.showModifyRound(level)" data-ng-if="!level.start && !level.end"><label>{{'ROUND' | translate}}&nbsp;{{level.level}}</label></a>
+				</div>
+				<div class="row top7">
+					<span>{{'START' | translate}}:</span>&nbsp;{{level.date_start | date:'yyyy-MM-dd HH:mm'}}
+				</div>
+				<div class="row">
+					<span>{{'WORK_DAYS' | translate}}:</span>&nbsp;{{level.work_days}}
+				</div>
+				<div class="row">
+					<span>{{'END' | translate}}:</span>&nbsp;{{level.date_end | date:'yyyy-MM-dd HH:mm'}}
+				</div>
+				<div class="row">
+					<span>{{'REVIEW_RESULTS_UNTIL' | translate}}:</span>&nbsp;{{level.date_review | date:'yyyy-MM-dd HH:mm'}}
+				</div>
+				<div class="row" data-ng-if="level.objects && level.objects.length != 0">
+					<small><label>{{'OBJECTS' | translate}}</label></small>
+				</div>
+				<div class="row" data-ng-repeat="obj in level.objects">
+					<span class="col-xs-12">{{obj.title}}</span>
+					<span class="col-xs-12">{{obj.amount}}</span>
+				</div>
+				<!-- Show Invite statistics -->
+				<div class="row top7">
+					<div class="row">
+						<span>{{'INVITED' | translate}}:&nbsp;{{vm.statistics[level.level-1].invited}}</span>
+					</div>
+					<div class="row">
+						<span>{{'ACCEPTED' | translate}}:&nbsp;{{vm.statistics[level.level-1].accepted}}</span>
+					</div>
+					<div class="row">
+						<span>{{'REJECTED' | translate}}:&nbsp;{{vm.statistics[level.level-1].rejected}}</span>
+					</div>
+				</div>
+				<!-- Button to invite on round 1 -->
+				<div class="row top7" data-ng-if="!level.start && !level.end && level.level==1">
+					<div class="btn-group" uib-dropdown is-open="level.isOpenInvite" id="invite-round-1">
+						<button type="button" class="btn btn-default" uib-dropdown-toggle title="{{'INVITE' | translate}}">
+							{{'INVITE_USER_OR_EMAIL' | translate}}<span class="caret"></span>
+						</button>
+						<ul uib-dropdown-menu role="menu" area-labelledby="invite-round-1">
+							<li role="menuitem"><a href="#" data-ng-click="vm.inviteUser(1)">{{'INVITE_USER' | translate}}</a></li>
+							<li role="menuitem"><a href="#" data-ng-click="vm.inviteEmail(1)">{{'INVITE_EMAIL' | translate}}</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- *************************** -->
+			</div>
+			<div class="col-xs-2" data-ng-if="vm.auction.rounds.length < 5 && !vm.modifyRound">
+				<button type="button" data-ng-if="vm.auction.status != 3" class="btn btn-default segment" data-ng-click="vm.showModifyRound()">{{'ADD_ROUND' | translate}}</button>
+			</div>
+			<div class="col-xs-3 panel panel-default" data-ng-if="vm.modifyRound">
+				<form name="modifyRoundForm" class="form-vertical" role="form" data-ng-submit="vm.storeRound(modifyRoundForm.$valid)">
+					<fieldset>
+						<div class="row from-group top7">
+							<span class="form-control">{{'ROUND' | translate}}&nbsp;{{vm.round.level}}</span>
+						</div>
+						<div class="row top5">
+							<span class="form-control">
+								<span data-ng-if="!vm.round.date_start">{{'START' | translate}}</span><span data-ng-if="vm.round.date_start">{{vm.round.date_start}}</span>
+								<input type="hidden" name="date_start" class="form-control" data-ng-model="vm.round.date_start" jq-button-image="/assets/images/down_arrow_small1.png" jqdatepicker />
+							</span>
+						</div>
+						<div class="row top5">
+							<div class="col-xs-10 no-padding">
+								<input type="number" name="work_days" class="form-control" data-ng-model="vm.round.work_days" required />
+							</div>
+							<div class="col-xs-1">
+								<button type="button" class="btn btn-default segment" title="{{'CALC_DATE' | translate}}" data-ng-click="vm.calcEndRoundDate(vm.round)">
+									<i class="glyphicon glyphicon-refresh"></i>
+								</button>
+							</div>
+						</div>
+						<div class="row top5">
+							<span class="form-control">
+								<span data-ng-if="!vm.round.date_end">{{'END' | translate}}</span><span data-ng-if="vm.round.date_end">{{vm.round.date_end}}</span>
+								<input type="hidden" name="date_end" class="form-control" data-ng-model="vm.round.date_end" jq-button-image="/assets/images/down_arrow_small1.png" jqdatepicker />
+							</span>
+						</div>
+						<div class="row top5">
+							<span class="form-control">
+								<span data-ng-if="!vm.round.date_review">{{'REVIEW_RESULTS_UNTIL' | translate}}</span><span data-ng-if="vm.round.date_review">{{vm.round.date_review}}</span>
+								<input type="hidden" name="date_review" class="form-control" data-ng-model="vm.round.date_review" jq-button-image="/assets/images/down_arrow_small1.png" jqdatepicker />
+							</span>
+						</div>
+						<div class="row top5">
+							<textarea class="form-control" data-ng-model="vm.round.review_text" placeholder="{{'REVIEW_RESULTS_EMAIL_TEXT' | translate}}"></textarea>
+						</div>
+						<div class="row top5" data-ng-if="vm.round.objects && vm.round.objects.length != 0 && vm.round.level == 1 && vm.auction.rounds.length < 2">
+							<small><label>{{'OBJECTS' | translate}}</label></small>
+						</div>
+						<div class="row" data-ng-repeat="obj in vm.round.objects track by $index" data-ng-if="vm.round.level == 1 && vm.auction.rounds.length < 2">
+							<div class="col-xs-12 no-padding">
+								<input type="text" name="title" class="form-control" data-ng-model="obj.title" title="{{'NAME' | translate}}" required />
+							</div>
+							<div class="col-xs-10 no-padding">
+								<input type="number" name="amount" class="form-control" data-ng-model="obj.amount" required />
+							</div>
+							<div class="col-xs-1">
+								<button type="button" class="btn btn-danger" data-ng-click="vm.removeObject(vm.round, $index)" title="{{'REMOVE' | translate}}">
+									<i class="glyphicon glyphicon-trash"></i>
+								</button>
+							</div>
+						</div>
+					</fieldset>
+					<div class="row top5">
+						<button type="submit" class="btn btn-primary segment">{{'SAVE' | translate}}</button>
+						<button type="button" class="btn btn-default segment" data-ng-click="vm.cancelModifyRound()">{{'CANCEL' | translate}}</button>
+						<button type="button" data-ng-if="vm.round.level == 1 && vm.auction.rounds.length < 2" class="btn btn-default segment pull-right" data-ng-click="vm.addObject(vm.round)">
+							{{'ADD_OBJECT' | translate}}
+						</button>
+					</div>
+				</form>
+				<br />
+			</div>
+		</div>
+		<!-- Round tables -->
+		<span ng-include="'/modules/auction/client/views/auction/roundtables.client.view.html'"></span>
+	</div>
+</section>

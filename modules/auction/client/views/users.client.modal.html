@@ -1,0 +1,25 @@
+<div class="modal-header">
+	<h3>{{'SEND_INVITATION_EMAIL' | translate}}</h3>
+</div>
+<form class="form-horizontal" role="form" name="inviteUserForm" data-ng-submit="vm.storeInvite(inviteUserForm.$valid)">
+	<div class="modal-body">
+		<fieldset>
+			<div class="form-group">
+				<label class="col-md-3">{{'USER' | translate}}</label>
+				<div class="col-md-9">
+					<select class="form-control" data-ng-model="vm.invite.email">
+						<option data-ng-repeat="user in vm.users" value="{{user.email}}">{{user.displayName}}</option>
+					</select>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="modal-footer">
+		<div class="form-group">
+			<div class="col-md-offset-3 col-md-9">
+		        <button class="btn btn-primary" type="submit" data-ng-disabled="vm.process">{{'SEND' | translate}}</button>
+	        	<button class="btn btn-warning" type="button" data-ng-click="vm.cancel()" data-ng-disabled="vm.process">{{'CANCEL' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</form>

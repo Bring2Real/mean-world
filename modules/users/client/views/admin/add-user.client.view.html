@@ -1,0 +1,70 @@
+<section data-ng-controller="UsersCreateClientController as vm" class="container">
+  <div class="page-header">
+    <h1 style="padding-left: 16px;">{{'NEW_USER' | translate}}</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.userForm" ng-submit="vm.addUser(vm.userForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label for="username">{{'USERNAME' | translate}}</label>
+          <input type="text" id="username" name="username" class="form-control" ng-model="vm.user.username" placeholder="User name" required />
+          <div ng-messages="vm.userForm.username.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Username is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="email">{{'EMAIL' | translate}}</label>
+          <input type="text" id="email" name="email" class="form-control" ng-model="vm.user.email" placeholder="Email" required />
+          <div ng-messages="vm.userForm.email.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Email is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="firstName">{{'FIRST_NAME' | translate}}</label>
+          <input type="text" id="firstName" name="firstName" class="form-control" ng-model="vm.user.firstName" placeholder="First Name" required />
+          <div ng-messages="vm.userForm.firstName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">First name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="lastName">{{'LAST_NAME' | translate}}</label>
+          <input type="text" id="lastName" name="lastName" class="form-control" ng-model="vm.user.lastName" placeholder="Last Name" required />
+          <div ng-messages="vm.userForm.lastName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Last name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="phone">{{'PHONE' | translate}}</label>
+          <input type="text" id="phone" name="phone" class="form-control segment" ng-model="vm.user.phone" placeholder="Phone" />
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="roles">{{'ROLES' | translate}}</label>
+          <div class="input-group col-md-12">
+            <ui-select multiple allow-clear ng-model="vm.selectedRoles" theme="bootstrap" name="roles" required>
+              <ui-select-match placeholder="Select role...">{{$item.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="item in vm.roles">
+                <span ng-bind="item.name"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div ng-messages="vm.userForm.roles.$error" role="alert">
+            <p class="help-block error-text" ng-message="required comaseparated roles">{{'ROLES_REQUIRED' | translate}}</p>
+          </div>
+        </div>
+        <!-- ********* -->
+        <div class="form-group">
+          <label>{{'LANGUAGE' | translate}}</label>
+            <div class="button-bar">
+              <a class="btn" ng-class="{'btn m-link segment': vm.isActiveLangUser('de'), 'btn m-link ': !vm.isActiveLangUser('de')}" data-ng-click="vm.setActiveLangUser('de')">de</a>
+              <a class="btn" ng-class="{'btn m-link segment': vm.isActiveLangUser('en'), 'btn m-link ': !vm.isActiveLangUser('en')}" data-ng-click="vm.setActiveLangUser('en')">en</a>
+              <a class="btn" ng-class="{'btn m-link segment': vm.isActiveLangUser('ru'), 'btn m-link ': !vm.isActiveLangUser('ru')}" data-ng-click="vm.setActiveLangUser('ru')">ru</a>
+            </div>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="{{'SAVE' | translate}}" class="btn btn-primary">
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

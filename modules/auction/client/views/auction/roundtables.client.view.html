@@ -1,0 +1,68 @@
+<hr>
+<div class="row" data-ng-repeat="round in vm.auction.rounds">
+	<div class="row" data-ng-show="round.start">
+		<div class="forms-results-table">
+			<div class="forms-results-inside" data-ng-style="{'width': round.table_width}">
+				<table class="table" st-table="vm.auction.offers" st-safe-src="vm.auctionSafe.offers">
+					<thead>
+						<tr>
+							<th scope="col" width="{{vm.firstRowWidth}}px">{{'ROUND' | translate}}&nbsp;{{round.level}}</th>
+							<th scope="col" width="{{vm.rowWidth}}px" data-ng-repeat="offer in vm.auction.offers | filter:{level: round.level}">
+								<p data-ng-if="!round.review">{{offer.bank_id.title}}</p>
+								<p data-ng-if="!round.review">{{'OFFER' | translate}}&nbsp;{{offer.num}}</p>
+								<p data-ng-if="round.review && round.start && round.end"><a ui-sref="offers({bankId:offer.bank_id._id,round: round, lang: vm.auction.language, auctionId: vm.auction._id})">{{offer.bank_id.title}}</a></p>
+								<p data-ng-if="round.review && round.start && round.end"><a ui-sref="offers({bankId:offer.bank_id._id,round: round, lang: vm.auction.language, auctionId: vm.auction._id})">{{'OFFER' | translate}}&nbsp;{{offer.num}}</a></p>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td width="{{vm.firstRowWidth}}px">{{'STATUS' | translate}}</td>
+							<td scope="col" width="{{vm.rowWidth}}px" data-ng-repeat="offer in vm.auction.offers | filter:{level: round.level}">
+								<span data-ng-show="offer.status">{{'COMPLETED' | translate}}</span><span data-ng-show="!offer.status">{{'UNFINISHED' | translate}}</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="{{vm.firstRowWidth}}">{{'FEEDBACK' | translate}}</td>
+							<td scope="col" width="{{vm.rowWidth}}px" data-ng-repeat="bank in vm.auction.banks | filter:{level: round.level, colspan: '!0'}" colspan="{{bank.colspan}}" class="text-center">
+								<div class="btn-group" data-ng-if="round.start && round.end && round.review && vm.auction.status == 4" uib-dropdown is-open="offer.is_open" id="offer{{offer._id}}">
+									<button type="button" class="btn btn-default segment" uib-dropdown-toggle title="{{'SELECT' | translate}}"><span data-ng-if="!bank.accepted && !bank.rejected">{{'SELECT' | translate}}</span><span data-ng-if="round.level==vm.auction.rounds.length && bank.accepted">{{'WINNER' | translate}}</span><span data-ng-if="round.level<vm.auction.rounds.length && bank.accepted">{{'ACCEPTED' | translate}}</span><span data-ng-if="bank.rejected">{{'REJECTED' | translate}}</span><i class="caret"></i></button>
+									<ul uib-dropdown-menu role="menu" area-labelledby="copy-lang-btn{{$index}}">
+										<li role="menuitem"><a href="#" data-ng-click="vm.acceptToNext(bank, round.level)"><span data-ng-if="round.level==vm.auction.rounds.length">{{'WINNER' | translate}}</span><span data-ng-if="round.level<vm.auction.rounds.length">{{'INVITE_TO_ROUND' | translate}}&nbsp;{{round.level + 1}}</span></a></li>
+										<li role="menuitem"><a href="#" data-ng-click="vm.rejectBank(bank, round.level)">{{'REJECT' | translate}}</a></li>
+									</ul>
+								</div>
+								<div class="text-center" data-ng-if="round.start && round.end && !round.review || vm.auction.status != 4">
+									<span data-ng-if="bank.accepted">{{'ACCEPTED' | translate}}</span><span data-ng-if="bank.rejected">{{'REJECTED' | translate}}</span>
+								</div>
+								<div class="text-center" data-ng-if="round.start && !round.end">
+									{{'IN_PROGRESS' | translate}}
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td width="{{vm.firstRowWidth}}px">{{'OFFER_DATE' | translate}}</td>
+							<td scope="col" width="{{vm.rowWidth}}px" data-ng-repeat="offer in vm.auction.offers | filter:{level: round.level}">
+								{{offer.createdAt | date:'yyyy-MM-dd HH:mm'}}
+							</td>
+						</tr>
+						<tr>
+							<td width="{{vm.firstRowWidth}}px">{{'MAXIMUM_OFFER' | translate}}</td>
+							<td scope="col" width="{{vm.rowWidth}}px" data-ng-repeat="offer in vm.auction.offers | filter:{level: round.level}">
+								{{offer.points}}
+							</td>
+						</tr>
+						<tr>
+							<td width="{{vm.firstRowWidth}}px">{{'OFFERS' | translate}}</td>
+							<td scope="col" width="{{vm.rowWidth}}px" data-ng-repeat="offer in vm.auction.offers | filter:{level: round.level}">
+								<div class="row" data-ng-repeat="field in offer.form_data">
+									{{field.value}}
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

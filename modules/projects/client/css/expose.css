@@ -1,0 +1,33 @@
+.no-padding {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.top-buffer {
+	margin-top:20px;
+}
+
+.top-buffer-5 {
+	margin-top:5px;
+}
+
+.thumb-table {
+	padding: 5px;
+	max-width: 70px;
+}
+
+.thumb-expose {
+	padding: 5px;
+	max-height: 300px;
+}
+
+.row-document {
+	height: 600px;
+	border: 1px solid gray;
+}
+
+.fancybox-custom .fancybox-skin {
+	-webkit-box-shadow: 0 0 50px #222;
+	-moz-box-shadow: 0 0 50px #222;
+	box-shadow: 0 0 50px #222;
+}

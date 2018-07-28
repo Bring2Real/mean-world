@@ -1,0 +1,60 @@
+<section class="container" data-ng-controller="UpdateFirmClientController as vm">
+	<h3>{{'UPDATE_BANK' | translate}}</h3>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<div class="row">
+		<form name="updateFirmForm" class="form-horizontal" role="form" data-ng-submit="vm.storeFirm(updateFirmForm.$valid)">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-xs-3">{{'TITLE' | translate}}&nbsp;*</label>
+					<div class="col-xs-9">
+						<input type="text" name="title" class="form-control" data-ng-model="vm.firm.title" required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">{{'COUNTRY' | translate}}</label>
+					<div class="col-xs-9">
+						<select class="form-control" data-ng-model="vm.firm.country">
+							<option data-ng-repeat="country in vm.countries" value="{{country.code}}">{{country.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">{{'POST_CODE' | translate}}&nbsp;*</label>
+					<div class="col-xs-9">
+						<input type="text" name="post_code" class="form-control" data-ng-model="vm.firm.post_code" required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">{{'CITY' | translate}}&nbsp;*</label>
+					<div class="col-xs-9">
+						<input type="text" name="city" class="form-control" data-ng-model="vm.firm.city" required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">{{'STREET' | translate}}&nbsp;*</label>
+					<div class="col-xs-9">
+						<input type="text" name="street" class="form-control" data-ng-model="vm.firm.street" required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">{{'EMAIL_DOMAIN' | translate}}&nbsp;*</label>
+					<div class="col-xs-9">
+						<input type="text" name="email_domain" class="form-control" data-ng-model="vm.firm.email_domain" required />
+					</div>
+				</div>
+			</fieldset>
+			<div class="row">
+				<div class="col-xs-6">
+					<button type="submit" class="btn btn-primary">
+						<i class="glyphicon glyphicon-ok"></i>{{'SAVE' | translate}}
+					</button>
+					<button type="button" class="btn btn-default" data-ng-click="vm.cancelUpdate()">
+						<i class="glyphicon glyphicon-remove"></i>{{'CANCEL' | translate}}
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

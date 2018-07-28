@@ -1,0 +1,56 @@
+<section data-ng-controller="UpdateProjectClientController as vm" data-ng-init="vm.initProject()">
+	<h4 class="row">{{'UPDATE_PROJECT' | translate}}&nbsp;{{vm.project.project_name}}</h4>
+	<div class="row container">
+		<div class="col-xs-2" data-ng-repeat="lng in vm.languages">
+			<span data-ng-if="vm.lang==lng.language">{{lng.name}}</span>
+			<a href="" data-ng-click="vm.changeLanguage(lng.language)" data-ng-if="vm.lang!=lng.language">{{lng.name}}</a>
+		</div>
+	</div>
+	<!-- for loader -->
+	<div class="loading" style="display: none;"></div>
+	<!-- ********** -->
+	<div class="row container">
+		<form name="updateProjectForm" class="form-horizontal" role="form" data-ng-submit="vm.storeProject(updateProjectForm.$valid)" enctype="multipart/form-data">
+			<fieldset>
+				<div class="row">
+					<div class="col-xs-1">
+						<img class="img-thumbnail" ngf-src="vm.project.project_logo.value" data-ng-if="vm.project.project_logo.value != ''">
+						<img class="img-thumbnail" src="{{vm.be}}{{vm.project.project_logo.field_url_prev}}" data-ng-if="!vm.project.project_logo.value">
+					</div>
+					<div class="col-xs-1" data-ng-repeat="field in vm.fields | filter: {field_type: 4}">
+						<img class="img-thumbnail" ngf-src="field.value" data-ng-if="field.value != ''">
+						<img class="img-thumbnail" src="{{vm.be}}{{field.field_url_prev}}" data-ng-if="field.value == ''">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">{{'PROJECT_NAME_SHORT' | translate}}*</label>
+					<div class="col-xs-9">
+						<input type="text" name="project_name" class="form-control" data-ng-model="vm.project.project_name" data-ng-disabled="vm.created" required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">{{'PROJECT_LOGO' | translate}}*</label>
+					<div class="col-xs-4">
+						<input type="text" name="project_logo_txt" class="form-control" data-ng-model="vm.project.project_logo.field_default" />
+					</div>
+					<div class="col-xs-5">
+						<input type="file" name="project_logo" class="form-control" data-ng-model="vm.project.project_logo.value" ngf-select accept="image/png, image/jpeg, image/jpg" />
+					</div>
+				</div>
+				<span data-ng-include="'/modules/templates/client/views/show/templateform.client.view.html'"></span>
+			</fieldset>
+			<div class="row">
+				<div class="col-xs-6">
+					<button type="submit" class="btn btn-primary">
+						<i class="glyphicon glyphicon-ok"></i>{{'SAVE' | translate}}
+					</button>
+					<button type="button" class="btn btn-default" data-ng-click="vm.cancelUpdate()">
+						<i class="glyphicon glyphicon-remove"></i>{{'CANCEL' | translate}}
+					</button>
+				</div>
+			</div>
+		</form>
+		<hr />
+		<span data-ng-if="vm.unitList" data-ng-include="'/modules/projects/client/views/units.client.view.html'"></span>
+	</div>
+</section>

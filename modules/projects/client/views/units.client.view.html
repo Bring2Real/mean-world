@@ -1,0 +1,65 @@
+<div class="row">
+	<h4 class="col-xs-2">{{'UNITS_TABLE' | translate}}</h4>
+</div>
+<form class="form-vertical" name="uploadUnitXLSXForm" role="form" data-ng-submit="vm.importXLSX(uploadUnitXLSXForm.$valid)">
+	<div class="row">
+		<div class="col-xs-2">
+			<button type="button" class="btn btn-primary segment" data-ng-click="vm.createUnit()">
+				{{'ADD_UNIT' | translate}}
+			</button>
+		</div>
+		<div class="col-xs-2">
+			<div class="btn btn-primary segment" ngf-select="vm.uploadXLSX($file)" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">{{'SELECT_FILE' | translate}}</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="row" data-ng-repeat="unit_field in vm.unit_fields">
+				<div class="col-xs-1">
+					<input type="checkbox" name="{{unit_field.field_name}}_check" data-ng-model="unit_field.value" />
+				</div>
+				<div class="col-xs-10">
+					<span class="form-control">{{unit_field.field_caption}}</span>
+				</div>
+			</div>
+			<div class="row" data-ng-if="vm.unit_fields.length != 0">
+				<div class="col-xs-6">
+					<button type="submit" class="btn btn-primary segment">{{'IMPORT_SELECTED_COLUMNS' | translate}}</button>
+					<button type="button" class="btn btn-default segment" data-ng-click="vm.unit_fields=[]">{{'CANCEL' | translate}}</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<button type="button" class="btn btn-warning" data-ng-if="vm.units.length!=0" data-ng-click="vm.removeAllUnits()">{{'REMOVE_ALL_UNITS' | translate}}</button>
+		</div>
+	</div>
+</form>
+<div class="row" data-ng-if="vm.units.length != 0">
+	<table class="table table-hovered">
+		<thead>
+			<tr>
+				<th class="col-xs-1" data-ng-repeat="uh in vm.unit_headers">
+					<div class="row">
+						<small>
+							<a href="" data-ng-click="vm.hideColumn(uh.field_name, true)" data-ng-show="!uh.hidden" title="{{'CLICK_HIDE_IN_EXPOSE' | translate}}">{{'SHOWN' | translate}}</a><a href="" data-ng-click="vm.hideColumn(uh.field_name, false)" data-ng-show="uh.hidden" title="{{'CLICK_SHOW_IN_EXPOSE' | translate}}">{{'HIDDEN' | translate}}</a>
+						</small>
+					</div>
+					<div class="row">
+						{{uh.field_caption}}
+					</div>
+				</th>
+				<th class="col-xs-1">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="unit in vm.units">
+				<td class="col-xs-1" data-ng-repeat="dat in unit.unit_data track by $index">
+					<a href="/unit-update/{{unit._id}}" data-ng-if="$index==0" title="{{'UPDATE_UNIT' | translate}}">{{dat.value}}</a><span data-ng-if="$index!=0">{{dat.value}}</span>
+				</td>
+				<td class="col-xs-1">
+						<button type="button" class="btn btn-danger" title="{{'DELETE_UNIT' | translate}}" data-ng-click="vm.removeUnit(unit._id)">
+							<i class="glyphicon glyphicon-trash"></i>
+						</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

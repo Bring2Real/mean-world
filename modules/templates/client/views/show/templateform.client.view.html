@@ -1,0 +1,23 @@
+<div class="form-group" data-ng-repeat="field in vm.fields track by $index">
+	<label class="col-xs-3" data-ng-if="field.field_type != 6">{{field.field_caption}}<span data-ng-show="field.field_required">*</span></label>
+	<div class="col-xs-9" data-ng-if="field.field_type == 1">
+		<input type="text" name="{{field.field_name}}" class="form-control" data-ng-model="field.value" ng-required="field.field_required" />
+	</div>
+	<div class="col-xs-9"  data-ng-if="field.field_type == 2">
+		<select class="form-control" data-ng-model="field.value">
+			<option data-ng-repeat="opt in field.field_opts" value="{{opt}}">{{opt}}</option>
+		</select>
+	</div>
+	<div class="col-xs-9" data-ng-if="field.field_type == 3">
+		<textarea class="form-control" data-ng-model="field.value" ng-required="field.field_required"></textarea>
+	</div>
+	<div class="col-xs-5" data-ng-if="field.field_type == 4 || field.field_type == 5">
+		<input type="text" name="{{field.field_name}}" class="form-control" data-ng-model="field.field_default" placeholder="Short Description" ng-required="field.field_required" />
+	</div>
+	<div class="col-xs-4" data-ng-if="field.field_type == 4">
+		<input type="file" name="{{field.field_name}}" ngf-change="vm.onChangeImage($files, field)" ngf-select data-ng-model="field.value" class="form-control" accept="image/png, image/jpeg, image/jpg" />
+	</div>
+	<div class="col-xs-4" data-ng-if="field.field_type == 5">
+		<input type="file" name="{{field.field_name}}" ngf-select data-ng-model="field.value" class="form-control" accept="application/pdf" />
+	</div>
+</div>

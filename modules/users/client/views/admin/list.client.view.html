@@ -1,0 +1,59 @@
+<section data-ng-controller="UsersListClientController as vm" data-ng-init="vm.initList()">
+    <br />
+    <br />
+    <div class="row text-center">
+        <h2>{{'USERS' | translate}}</h2>
+    </div>
+    <div class="row">
+        <a href="" ui-sref="users-add" class="btn btn-primary">
+            <i class="glyphicon glyphicon-plus"></i>
+            {{'ADD' | translate}}
+        </a>
+    </div>
+    <div class="row">
+        <table class="table table-hover" st-table="vm.users" st-safe-src="vm.usersSafe">
+            <thead>
+                <tr>
+                    <th class="col-xs-1">#</th>
+                    <th class="col-xs-2" st-sort="username">{{'USERNAME' | translate}}</th>
+                    <th class="col-xs-2" st-sort="displayName">{{'DISPLAY_NAME' | translate}}</th>
+                    <th class="col-xs-2" st-sort="email">{{'EMAIL' | translate}}</th>
+                    <th class="col-xs-2">{{'ROLES' | translate}}</th>
+                    <th class="col-xs-2">&nbsp;</th>
+                </tr>
+                <tr>
+                    <th colspan="6">
+                        <input st-search="" class="form-control" placeholder="global search..." type="text" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="user in vm.users track by $index">
+                    <td class="col-xs-1">{{$index + 1}}</td>
+                    <td class="col-xs-2">{{user.username}}</td>
+                    <td class="col-xs-2">{{user.displayName}}</td>
+                    <td class="col-xs-2">{{user.email}}</td>
+                    <td class="col-xs-2">{{user.roles}}</td>
+                    <td class="col-xs-2">
+                        <a class="btn btn-default" href="" ui-sref="users-edit({userId: user._id})" title="Edit user">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                        <a class="btn btn-default" ui-sref="users-reset({userId: user._id})" title="Reset password">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                        </a>
+                        <button class="btn btn-danger" data-ng-click="vm.remove(user, $index)" title="Remove user">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="7" class="text-center">
+                        <div st-pagination="" st-items-by-page="vm.itemsByPage" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
